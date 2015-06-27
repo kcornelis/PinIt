@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "out": "src/angular.js",
+        "sourceMap": true,
+        "target": "es5"
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./app/bootstrap.ts",
+        "./app/config.ts",
+        "./app/config/maps.ts",
+        "./app/config/routes.ts",
+        "./app/controllers/HomeController.ts",
+        "./app/controllers/MapController.ts",
+        "./app/directives/SearchPlaces.ts",
+        "./typings/all.d.ts",
+        "./typings/angular-route.d.ts",
+        "./typings/angular-ui-router.d.ts",
+        "./typings/angular.d.ts",
+        "./typings/jquery.d.ts"
+    ]
+}
