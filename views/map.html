@@ -7,7 +7,7 @@
 		<div class="col-xs-1"></div>
 		<div class="col-xs-10">
 			<ui-gmap-google-map center='viewModel.map.center' zoom='viewModel.map.zoom'>
-				<ui-gmap-markers models="viewModel.markers" coords="'self'" icon="'icon'"></ui-gmap-markers>
+				<ui-gmap-markers models="viewModel.markers" coords="'position'" icon="'icon'"></ui-gmap-markers>
 			</ui-gmap-google-map>
 		</div>
 		<div class="col-xs-1"></div>
@@ -17,7 +17,7 @@
 		<div class="col-xs-10">
 			<div class="form-group" style="margin-top: 20px">
 				<label>Search places</label>
-				<input type="text" class="form-control" pi-search-places place-changed="viewModel.changePlace(place)" />
+				<input type="text"class="form-control" pi-search-places place-changed="viewModel.changePlace(place)" />
 			</div>
 		</div>
 		<div class="col-xs-1"></div>

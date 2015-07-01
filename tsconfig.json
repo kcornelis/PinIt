@@ -17,9 +17,11 @@
         "./app/controllers/MapController.ts",
         "./app/directives/SearchPlaces.ts",
         "./typings/all.d.ts",
+        "./typings/angular-google-maps.d.ts",
         "./typings/angular-route.d.ts",
         "./typings/angular-ui-router.d.ts",
         "./typings/angular.d.ts",
+        "./typings/google.maps.d.ts",
         "./typings/jquery.d.ts"
     ]
 }

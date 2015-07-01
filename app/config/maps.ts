@@ -9,7 +9,7 @@ module pinIt {
 			'uiGmapGoogleMapApiProvider'
 		];
 
-		constructor(uiGmapGoogleMapApiProvider: any) {
+		constructor(uiGmapGoogleMapApiProvider: angular.google.maps.IApiProvider) {
 			
 			uiGmapGoogleMapApiProvider.configure({
 				key: pinIt.config.google.apiKey,

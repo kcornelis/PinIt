@@ -8,21 +8,22 @@ module pinIt {
 	}
 
 	class SearchPlacesDirective implements ng.IDirective  {
-		private GoogleMapApi;
+		private _apiLoader: angular.google.maps.IApiLoader;
 
 		restrict = 'A';
 		scope = {
 			placeChanged: '&'
 		};
 
-		constructor(GoogleMapApi: any) {
-			this.GoogleMapApi = GoogleMapApi;
+		constructor(apiLoader: angular.google.maps.IApiLoader) {
+			this._apiLoader = apiLoader;
 		}
 
-		link = (scope: ISearchPlacesScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: any) => {
-			this.GoogleMapApi.then((map) => {
-				var searchBox = new map.places.SearchBox(element[0]);
-				map.event.addListener(searchBox, 'places_changed', () => {
+		link = (scope: ISearchPlacesScope, element: HTMLInputElement[]) => {
+			this._apiLoader.then(() => {
+
+				var searchBox = new google.maps.places.SearchBox(element[0]);
+				google.maps.event.addListener(searchBox, 'places_changed', () => {
 					var places = searchBox.getPlaces();
 					if (places && places.length > 0 && scope.placeChanged) {
 						scope.$apply(() => { 
