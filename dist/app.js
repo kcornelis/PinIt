@@ -79,17 +79,34 @@ var pinIt;
 var pinIt;
 (function (pinIt) {
     'use strict';
+    var PositionModel = (function () {
+        function PositionModel(latitude, longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+        return PositionModel;
+    })();
+    var MarkerModel = (function () {
+        function MarkerModel(id, position) {
+            this.id = id;
+            this.position = position;
+        }
+        return MarkerModel;
+    })();
+    var MapModel = (function () {
+        function MapModel(center, zoom) {
+            this.center = center;
+            this.zoom = zoom;
+        }
+        return MapModel;
+    })();
     var MapViewModel = (function () {
         function MapViewModel() {
             this.markers = [];
-            this.map = { center: { latitude: 50.851041, longitude: 4.3560789 }, zoom: 8 };
+            this.map = new MapModel(new PositionModel(50.851041, 4.3560789), 8);
         }
         MapViewModel.prototype.changePlace = function (place) {
-            var marker = {
-                id: place.id,
-                latitude: place.geometry.location.lat(),
-                longitude: place.geometry.location.lng()
-            };
+            var marker = new MarkerModel(place.id, new PositionModel(place.geometry.location.lat(), place.geometry.location.lng()));
             this.markers.push(marker);
         };
         return MapViewModel;
@@ -110,16 +127,16 @@ var pinIt;
 (function (pinIt) {
     'use strict';
     var SearchPlacesDirective = (function () {
-        function SearchPlacesDirective(GoogleMapApi) {
+        function SearchPlacesDirective(apiLoader) {
             var _this = this;
             this.restrict = 'A';
             this.scope = {
                 placeChanged: '&'
             };
-            this.link = function (scope, element, attrs, ctrl) {
-                _this.GoogleMapApi.then(function (map) {
-                    var searchBox = new map.places.SearchBox(element[0]);
-                    map.event.addListener(searchBox, 'places_changed', function () {
+            this.link = function (scope, element) {
+                _this._apiLoader.then(function () {
+                    var searchBox = new google.maps.places.SearchBox(element[0]);
+                    google.maps.event.addListener(searchBox, 'places_changed', function () {
                         var places = searchBox.getPlaces();
                         if (places && places.length > 0 && scope.placeChanged) {
                             scope.$apply(function () {
@@ -129,7 +146,7 @@ var pinIt;
                     });
                 });
             };
-            this.GoogleMapApi = GoogleMapApi;
+            this._apiLoader = apiLoader;
         }
         return SearchPlacesDirective;
     })();
