@@ -7,7 +7,8 @@ module pinIt {
 
 		public static $inject = [
 			'$stateProvider',
-			'$urlRouterProvider'
+			'$urlRouterProvider',
+			'$authProvider'
 		];
 
 		constructor($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.route.IRouteProvider) {
@@ -27,6 +28,12 @@ module pinIt {
 					url: '/home',
 					templateUrl: 'views/home.html',
 					controller: 'HomeController'
+				})
+
+				.state('login', {
+					url: '/login',
+					templateUrl: 'views/login.html',
+					controller: 'LoginController'
 				});
 		}
 	}

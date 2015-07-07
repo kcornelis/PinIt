@@ -6,7 +6,24 @@ var pinIt;
 var pinIt;
 (function (pinIt) {
     'use strict';
-    var app = angular.module('pinIt', ['ui.router', 'uiGmapgoogle-maps']);
+    var app = angular.module('pinIt', ['ui.router', 'uiGmapgoogle-maps', 'satellizer']);
+})(pinIt || (pinIt = {}));
+/// <reference path='../../typings/all.d.ts' />
+var pinIt;
+(function (pinIt) {
+    'use strict';
+    var Maps = (function () {
+        function Maps($authProvider) {
+            $authProvider.google({
+                clientId: pinIt.config.auth.google.clientId
+            });
+        }
+        Maps.$inject = [
+            '$authProvider'
+        ];
+        return Maps;
+    })();
+    angular.module('pinIt').config(Maps);
 })(pinIt || (pinIt = {}));
 /// <reference path='../../typings/all.d.ts' />
 var pinIt;
@@ -45,11 +62,17 @@ var pinIt;
                 url: '/home',
                 templateUrl: 'views/home.html',
                 controller: 'HomeController'
+            })
+                .state('login', {
+                url: '/login',
+                templateUrl: 'views/login.html',
+                controller: 'LoginController'
             });
         }
         Routes.$inject = [
             '$stateProvider',
-            '$urlRouterProvider'
+            '$urlRouterProvider',
+            '$authProvider'
         ];
         return Routes;
     })();
@@ -74,6 +97,33 @@ var pinIt;
         return HomeController;
     })();
     angular.module('pinIt').controller('HomeController', HomeController);
+})(pinIt || (pinIt = {}));
+/// <reference path='../../typings/all.d.ts' />
+var pinIt;
+(function (pinIt) {
+    'use strict';
+    var LoginViewModel = (function () {
+        function LoginViewModel() {
+        }
+        return LoginViewModel;
+    })();
+    var LoginController = (function () {
+        function LoginController($scope, $auth) {
+            $scope.viewModel = new LoginViewModel();
+            $scope.authenticate = function (provider) {
+                $auth.authenticate(provider).then(function (res) {
+                    var token = res.data.token;
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            };
+        }
+        LoginController.$inject = [
+            '$scope', '$auth'
+        ];
+        return LoginController;
+    })();
+    angular.module('pinIt').controller('LoginController', LoginController);
 })(pinIt || (pinIt = {}));
 /// <reference path='../../typings/all.d.ts' />
 var pinIt;

@@ -3,5 +3,5 @@
 module pinIt {
 	'use strict';
 	
-	var app = angular.module('pinIt', ['ui.router', 'uiGmapgoogle-maps']);
+	var app = angular.module('pinIt', ['ui.router', 'uiGmapgoogle-maps', 'satellizer']);
 }
